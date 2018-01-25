@@ -8,9 +8,22 @@ observer.observe(parentNode, { childList: true });
 
 
 function onMsg(e) {
-    let msgNode = e[0].addedNodes[0];
-    if (msgNode == undefined) {return};
-    //if (msgNode.getElementsByClassName("message-in")[0] == undefined) { return } //Check to see if the message was sent my the client
+    let msgNodes = [];
+    e.filter(element => element.previousSibling != null) //Check that Node is message
+    //TODO check that message was sent in the last five minutes
+    .forEach(element => { //Iterate through mutation records
+            element.addedNodes.forEach(element => {
+                msgNodes.push(element)
+            })
+        });
+
+
+    let msgNodes = e[0].addedNodes[0];
+    console.log(e)
+    console.log(e[0].addedNodes)
+
+    if (msgNode == undefined) { return };
+    //if (msgNode.getElementsByClassName("message-in")[0] == undefined) { return } //Check to see if this is (1) actually a message (2) from another client
     let textNodes = msgNode.getElementsByClassName("emojitext")[0];
     //nodeListToMarkdown(textNodes.childNodes);
 
@@ -20,7 +33,7 @@ function onMsg(e) {
 };
 
 /*function htmlToMarkdown(nodeList) {
-    
+
     [];
     .textContent
     .nodeName
