@@ -9,7 +9,7 @@ observer.observe(parentNode, { childList: true });
 
 function onMsg(e) {
     let msgNodes = [];
-    e.filter(element => element.previousSibling != null) //Check that Node is message
+    e.filter(element => element.previousSibling != null) //Check that Node is actually a message
     //TODO check that message was sent in the last five minutes
     .forEach(element => { //Iterate through mutation records
             element.addedNodes.forEach(element => {
